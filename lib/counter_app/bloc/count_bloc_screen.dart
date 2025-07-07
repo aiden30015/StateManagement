@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:state_management/counter_app/bloc/count_bloc.dart';
 import 'package:state_management/counter_app/bloc/count_event.dart';
+import 'package:state_management/counter_app/button.dart';
 
 class CountBlocScreen extends StatelessWidget {
   const CountBlocScreen({super.key});
@@ -24,19 +25,20 @@ class CountBlocScreen extends StatelessWidget {
                     ),
                   ),
                   Row(
+                    spacing: 10,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ElevatedButton(
+                      Button(
+                        operators: '+', 
                         onPressed: () {
                           context.read<CountBloc>().add(PlusEvent());
-                        }, 
-                        child: Text('+'),
+                        },
                       ),
-                      ElevatedButton(
+                      Button(
+                        operators: '-', 
                         onPressed: () {
                           context.read<CountBloc>().add(MinusEvent());
-                        }, 
-                        child: Text('-'),
+                        },
                       ),
                     ],
                   ),
