@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:state_management/counter_app/bloc/count_bloc_screen.dart';
+import 'package:state_management/counter_app/getx/count_getx_screen.dart';
 
 void main () {
   runApp(MyApp());
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: CountBlocScreen(),
+      home: CountGetxScreen(),
     );
   }
 }
