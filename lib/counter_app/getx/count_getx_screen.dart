@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:state_management/counter_app/button.dart';
-import 'package:state_management/counter_app/getx/getx.dart';
+import 'package:state_management/counter_app/getx/count_getx.dart';
 
 class CountGetxScreen extends StatelessWidget {
   CountGetxScreen({super.key});
