@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class AddTodoBottomSheet extends StatefulWidget {
-  const AddTodoBottomSheet({super.key});
+class AddTodoDialog extends StatefulWidget {
+  const AddTodoDialog({super.key});
 
   @override
-  State<AddTodoBottomSheet> createState() => _AddTodoBottomSheetState();
+  State<AddTodoDialog> createState() => _AddTodoDialogState();
 }
 
-class _AddTodoBottomSheetState extends State<AddTodoBottomSheet> {
+class _AddTodoDialogState extends State<AddTodoDialog> {
   TextEditingController controller = TextEditingController();
   TimeOfDay selectedTime = TimeOfDay.now();
 
