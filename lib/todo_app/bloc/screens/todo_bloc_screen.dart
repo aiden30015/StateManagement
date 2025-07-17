@@ -88,20 +88,22 @@ class TodoBlocScreen extends StatelessWidget {
                       child: ListView.builder(
                         itemCount: state.todos.length,
                         itemBuilder: (context, index) {
+                          final selectTodo = state.todos[index];
+
                           return Dismissible(
-                            key: ValueKey(state.todos[index].todo),
+                            key: ValueKey(selectTodo.todo),
                             onDismissed: (direction) {
                               context.read<TodoBloc>().add(DeleteTodoEvent(index: index));
                             },
                             child: TodoList(
-                              isCompleted: state.todos[index].isComplete,
+                              isCompleted: selectTodo.isComplete,
                               onChecked: () {
                                 context.read<TodoBloc>().add(
                                   CompleteTodoEvent(index: index),
                                 );
                               },
-                              todo: state.todos[index].todo,
-                              time: state.todos[index].date,
+                              todo: selectTodo.todo,
+                              time: selectTodo.date,
                             ),
                           );
                         },
