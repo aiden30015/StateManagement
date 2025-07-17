@@ -4,8 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:state_management/todo_app/bloc/bloc/todo_bloc.dart';
 import 'package:state_management/todo_app/bloc/bloc/todo_event.dart';
 import 'package:state_management/todo_app/bloc/bloc/todo_state.dart';
-import 'package:state_management/todo_app/bloc/screens/add_todo_dialog.dart';
-import 'package:state_management/todo_app/bloc/widgets/todo_list.dart';
+import 'package:state_management/todo_app/widgets/add_todo_dialog.dart';
+import 'package:state_management/todo_app/widgets/todo_list.dart';
 
 class TodoBlocScreen extends StatelessWidget {
   const TodoBlocScreen({super.key});
