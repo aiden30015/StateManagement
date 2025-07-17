@@ -1,11 +1,11 @@
 class Todo {
   final String date;
-  final bool inComplete;
+  bool isComplete;
   final String todo;
 
   Todo({
     required this.date,
-    required this.inComplete,
+    required this.isComplete,
     required this.todo,
   });
 }

@@ -94,7 +94,7 @@ class TodoBlocScreen extends StatelessWidget {
                               context.read<TodoBloc>().add(DeleteTodoEvent(index: index));
                             },
                             child: TodoList(
-                              isCompleted: state.todos[index].inComplete,
+                              isCompleted: state.todos[index].isComplete,
                               onChecked: () {
                                 context.read<TodoBloc>().add(
                                   CompleteTodoEvent(index: index),
