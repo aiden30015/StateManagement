@@ -6,16 +6,14 @@ class TodoGetx extends GetxController {
 
   void addTodo(String todo, String date) {
     todoList.add(Todo(date: date, isComplete: false, todo: todo));
-    update();
   }
 
   void DeleteTodo(int index) {
     todoList.removeAt(index);
-    update();
   }
 
   void CompleteTodo(int index) {
     todoList[index].isComplete = !todoList[index].isComplete;
-    update();
+    todoList.refresh();
   }
 }

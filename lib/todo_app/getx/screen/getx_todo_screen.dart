@@ -25,7 +25,7 @@ class GetxTodoScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: Column(
+          child: Obx( () =>Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Row(
@@ -80,24 +80,27 @@ class GetxTodoScreen extends StatelessWidget {
                 child: ListView.builder(
                   itemCount: todoController.todoList.length,
                   itemBuilder: (context, index) {
+                    final selectTodo = todoController.todoList[index];
+
                     return Dismissible(
-                      key: ValueKey(todoController.todoList[index].todo),
+                      key: ValueKey(selectTodo.isComplete),
                       onDismissed: (direction) {
                         todoController.DeleteTodo(index);
                       },
                       child: TodoList(
-                        isCompleted: todoController.todoList[index].isComplete,
+                        isCompleted: selectTodo.isComplete,
                         onChecked: () {
                           todoController.CompleteTodo(index);
                         },
-                        todo: todoController.todoList[index].todo,
-                        time: todoController.todoList[index].date,
+                        todo: selectTodo.todo,
+                        time: selectTodo.date,
                       ),
                     );
                   },
                 ),
               ),
             ],
+          ),
           ),
         ),
       ),
