@@ -1,14 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:state_management/todo_app/bloc/bloc/todo_event.dart';
 import 'package:state_management/todo_app/bloc/bloc/todo_state.dart';
+import 'package:state_management/todo_app/entities/todo_entity.dart';
 
 class TodoBloc extends Bloc<TodoEvent, TodoListState> {
 
   TodoBloc() : super(TodoListState(
     todos: [
-      Todo(date: '7:00am', inComplete: false, todo: '아침에 걷기'),
-      Todo(date: '9:30am', inComplete: false, todo: '철수 만나기'),
-      Todo(date: '11:00am', inComplete: false, todo: '도미노에서 피자 사기'),
+      Todo(date: '7:00am', isComplete: false, todo: '아침에 걷기'),
+      Todo(date: '9:30am', isComplete: false, todo: '철수 만나기'),
+      Todo(date: '11:00am', isComplete: false, todo: '도미노에서 피자 사기'),
     ])) {
     on<AddTodoEvent>(AddTodo);
     on<DeleteTodoEvent>(DeleteTodo);
@@ -21,7 +22,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoListState> {
   ) {
     final newTodo = Todo(
       date: event.date,
-      inComplete: false,
+      isComplete: false,
       todo: event.todo,
     );
     emit(
@@ -47,7 +48,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoListState> {
     final oldTodo = newTodos[event.index];
     newTodos[event.index] = Todo(
       date: oldTodo.date,
-      inComplete: !oldTodo.inComplete,
+      isComplete: !oldTodo.isComplete,
       todo: oldTodo.todo,
     );
     emit(TodoListState(todos: newTodos));
