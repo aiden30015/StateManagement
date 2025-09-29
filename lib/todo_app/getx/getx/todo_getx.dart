@@ -8,11 +8,11 @@ class TodoGetx extends GetxController {
     todoList.add(Todo(date: date, isComplete: false, todo: todo));
   }
 
-  void DeleteTodo(int index) {
+  void deleteTodo(int index) {
     todoList.removeAt(index);
   }
 
-  void CompleteTodo(int index) {
+  void completeTodo(int index) {
     todoList[index].isComplete = !todoList[index].isComplete;
     todoList.refresh();
   }
