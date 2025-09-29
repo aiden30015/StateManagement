@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:state_management/counter_app/river_pod/count_river_pod_screen.dart';
+import 'package:get/instance_manager.dart';
+import 'package:state_management/todo_app/getx/getx/todo_getx.dart';
+import 'package:state_management/todo_app/getx/screen/getx_todo_screen.dart';
 
-void main () {
+void main() {
+  Get.put(TodoGetx());
   runApp(MyApp());
 }
 
@@ -13,7 +16,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ProviderScope(
       child: MaterialApp(
-        home: CountRiverPodScreen(),
+        debugShowCheckedModeBanner: false,
+        home: GetxTodoScreen(),
       ),
     );
   }
