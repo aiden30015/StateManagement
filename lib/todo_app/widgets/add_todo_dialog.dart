@@ -50,20 +50,20 @@ class _AddTodoDialogState extends State<AddTodoDialog> {
             ),
             ElevatedButton(
               onPressed: () {
-                if(controller.text.isEmpty) {}
-                else {
+                if (controller.text.isEmpty) {
+                } else {
                   Navigator.pop(context, [controller.text, selectedTime]);
                 }
               },
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.resolveWith<Color?>(
-                  (Set<MaterialState> states) {
-                    if (controller.text.isEmpty) {
-                      return Colors.grey;
-                    }
-                    return Colors.blue;
-                  },
-                ),
+                backgroundColor: WidgetStateProperty.resolveWith<Color?>((
+                  Set<WidgetState> states,
+                ) {
+                  if (controller.text.isEmpty) {
+                    return Colors.grey;
+                  }
+                  return Colors.blue;
+                }),
               ),
               child: Text('완료'),
             ),
