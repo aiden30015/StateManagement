@@ -47,7 +47,7 @@ class GetxTodoScreen extends StatelessWidget {
               formatDate: formatDate,
             ),
             SizedBox(height: 20),
-            _buildTodoList(todoController),
+            Expanded(child: _buildTodoList(todoController)),
           ],
         ),
       ),
