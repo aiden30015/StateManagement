@@ -4,106 +4,74 @@ import 'package:intl/intl.dart';
 import 'package:state_management/todo_app/bloc/bloc/todo_bloc.dart';
 import 'package:state_management/todo_app/bloc/bloc/todo_event.dart';
 import 'package:state_management/todo_app/bloc/bloc/todo_state.dart';
+import 'package:state_management/todo_app/core/constant/todo_base_scaffold.dart';
 import 'package:state_management/todo_app/widgets/add_todo_dialog.dart';
+import 'package:state_management/todo_app/widgets/todo_appbar.dart';
 import 'package:state_management/todo_app/widgets/todo_list.dart';
 
 class TodoBlocScreen extends StatelessWidget {
   const TodoBlocScreen({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    var now = DateTime.now();
-    String formatDate = DateFormat('M월 d일 EEEE').format(now);
-
-    String formatTimeOfDayToAmPm(TimeOfDay time) {
+  String _formatTimeOfDay(TimeOfDay time) {
     final now = DateTime.now();
     final dt = DateTime(now.year, now.month, now.day, time.hour, time.minute);
-    final formatted = DateFormat('hh:mma').format(dt).toLowerCase(); 
-    return formatted;
-    }
+    return DateFormat('hh:mma').format(dt).toLowerCase();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final now = DateTime.now();
+    final formatDate = DateFormat('M월 d일 EEEE').format(now);
 
     return BlocProvider(
-      create: (context) => TodoBloc(),
-      child: Scaffold(
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      create: (_) => TodoBloc(),
+      child: Builder(
+        builder: (context) {
+          Future<void> addTodo() async {
+            final result = await showDialog(
+              context: context,
+              builder: (_) => const AddTodoDialog(),
+            );
+
+            if (result == null || result.length < 2) return;
+
+            final todoText = result[0];
+            final selectTime = _formatTimeOfDay(result[1]);
+
+            context.read<TodoBloc>().add(
+              AddTodoEvent(date: selectTime, todo: todoText),
+            );
+          }
+
+          return TodoBaseScaffold(
             child: BlocBuilder<TodoBloc, TodoListState>(
               builder: (context, state) {
                 return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              formatDate,
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 32,
-                              ),
-                            ),
-                            SizedBox(height: 20),
-                            Text(
-                              '${state.todos.length}개의 할일',
-                              style: TextStyle(
-                                color: Colors.blue,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ],
-                        ),
-                        ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
-                              Colors.blue,
-                            ),
-                            shape: MaterialStateProperty.all(CircleBorder()),
-                          ),
-                          onPressed: () async {
-                            final result = await showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AddTodoDialog();
-                              },
-                            );
-                            if (result != null) {
-                              final todoText = result[0];
-                              final timeOfDay = result[1];
-                              context.read<TodoBloc>().add(
-                                AddTodoEvent(date: formatTimeOfDayToAmPm(timeOfDay), todo: todoText),
-                              );
-                            }
-                          },
-                          child: Icon(Icons.add, color: Colors.white),
-                        ),
-                      ],
+                    TodoAppbar(
+                      addTodo: addTodo,
+                      todoLenght: state.todos.length,
+                      formatDate: formatDate,
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Expanded(
                       child: ListView.builder(
                         itemCount: state.todos.length,
                         itemBuilder: (context, index) {
-                          final selectTodo = state.todos[index];
+                          final todo = state.todos[index];
 
                           return Dismissible(
-                            key: ValueKey(selectTodo.todo),
-                            onDismissed: (direction) {
-                              context.read<TodoBloc>().add(DeleteTodoEvent(index: index));
-                            },
+                            key: ValueKey(todo.todo),
+                            onDismissed: (_) => context.read<TodoBloc>().add(
+                              DeleteTodoEvent(index: index),
+                            ),
                             child: TodoList(
-                              isCompleted: selectTodo.isComplete,
-                              onChecked: () {
-                                context.read<TodoBloc>().add(
-                                  CompleteTodoEvent(index: index),
-                                );
-                              },
-                              todo: selectTodo.todo,
-                              time: selectTodo.date,
+                              isCompleted: todo.isComplete,
+                              onChecked: () => context.read<TodoBloc>().add(
+                                CompleteTodoEvent(index: index),
+                              ),
+                              todo: todo.todo,
+                              time: todo.date,
                             ),
                           );
                         },
@@ -113,8 +81,8 @@ class TodoBlocScreen extends StatelessWidget {
                 );
               },
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
