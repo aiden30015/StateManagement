@@ -30,7 +30,7 @@ class TodoAppbar extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Text(
-              '${todoLenght}개의 할일',
+              '$todoLenght개의 할일',
               style: TextStyle(color: Colors.blue, fontSize: 16),
             ),
           ],
