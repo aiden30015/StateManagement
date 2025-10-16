@@ -11,12 +11,12 @@ class TodoBloc extends Bloc<TodoEvent, TodoListState> {
       Todo(date: '9:30am', isComplete: false, todo: '철수 만나기'),
       Todo(date: '11:00am', isComplete: false, todo: '도미노에서 피자 사기'),
     ])) {
-    on<AddTodoEvent>(AddTodo);
-    on<DeleteTodoEvent>(DeleteTodo);
-    on<CompleteTodoEvent>(CompleteTodo);
+    on<AddTodoEvent>(addTodo);
+    on<DeleteTodoEvent>(deleteTodo);
+    on<CompleteTodoEvent>(completeTodo);
   }
 
-  void AddTodo(
+  void addTodo(
     AddTodoEvent event,
     Emitter<TodoListState> emit
   ) {
@@ -32,7 +32,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoListState> {
     );
   }
 
-  void DeleteTodo(
+  void deleteTodo(
     DeleteTodoEvent event,
     Emitter<TodoListState> emit
   ) {
@@ -40,7 +40,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoListState> {
     emit(TodoListState(todos: newTodos));
   }
 
-  void CompleteTodo (
+  void completeTodo (
     CompleteTodoEvent event,
     Emitter<TodoListState> emit
   ) {
