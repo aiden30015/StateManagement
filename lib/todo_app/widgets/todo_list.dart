@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class TodoList extends StatelessWidget {
 
-  bool isCompleted;
+  final bool isCompleted;
   final VoidCallback onChecked;
   final String todo;
   final String time;
 
-  TodoList({
+  const TodoList({
     required this.isCompleted,
     required this.onChecked,
     required this.todo,
