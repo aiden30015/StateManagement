@@ -18,7 +18,10 @@ class _ApiService implements ApiService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<PokeItemResponseDto> getItems(int limit, int offset) async {
+  Future<List<PokeItemResponseDto>> fetchPoketmons(
+    int limit,
+    int offset,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'limit': limit,
@@ -26,7 +29,7 @@ class _ApiService implements ApiService {
     };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<PokeItemResponseDto>(
+    final _options = _setStreamType<List<PokeItemResponseDto>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -36,10 +39,15 @@ class _ApiService implements ApiService {
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late PokeItemResponseDto _value;
+    final _result = await _dio.fetch<List<dynamic>>(_options);
+    late List<PokeItemResponseDto> _value;
     try {
-      _value = PokeItemResponseDto.fromJson(_result.data!);
+      _value = _result.data!
+          .map(
+            (dynamic i) =>
+                PokeItemResponseDto.fromJson(i as Map<String, dynamic>),
+          )
+          .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

@@ -7,12 +7,12 @@ part 'api_service.g.dart';
 
 @RestApi()
 abstract class ApiService {
-  factory ApiService(Dio dio, {String? baseUrl}) {
+  factory ApiService(Dio dio, ) {
     final envBaseUrl = dotenv.env['BASE_URL']!;
-    return _ApiService(dio, baseUrl: baseUrl ?? envBaseUrl);
+    return _ApiService(dio, baseUrl: envBaseUrl);
   }
   @GET("/pokemon")
-  Future<PokeItemResponseDto> getItems(
+  Future<List<PokeItemResponseDto>> fetchPoketmons(
     @Query("limit") int limit,
     @Query("offset") int offset,
   );
