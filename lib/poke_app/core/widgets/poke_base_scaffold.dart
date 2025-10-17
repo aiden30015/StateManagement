@@ -16,7 +16,11 @@ class PokeBaseScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: appBar,
+        appBar: AppBar(
+          title: const Text('포켓몬 도감'),
+          centerTitle: true,
+          backgroundColor: Colors.blue,
+        ),
         body: Padding(
           padding: const EdgeInsets.all(16.0), 
           child: Center(
